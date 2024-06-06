@@ -1,0 +1,83 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #2c2f33;
+    color: #ffffff;
+    text-align: center;
+}
+
+h1 {
+    margin-top: 20px;
+}
+
+#rune-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.rune-checkbox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #020202;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.rune-checkbox img {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #6a6a6a;
+    color: rgb(239, 238, 238);
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+button:hover {
+    background-color: #6b6d71;
+}
+
+#runeword-suggestions {
+    margin-top: 20px;
+    list-style-type: none;
+    padding: 0;
+    text-align: center; /* Centering the output container */
+}
+
+#runeword-suggestions li {
+    background-color: #444;
+    padding: 0px; /* Adding more padding for better spacing */
+    margin: 0px 0; /* Adding margin for better spacing */
+    border-radius: 0px;
+    text-align: center; /* Centering the individual runeword containers */
+    display: inline-block; /* Centering the individual runeword containers */
+    width: 100%;
+}
+
+#runeword-suggestions li ul {
+    list-style-type: disc;
+    margin-left: 0px;
+    text-align: center; /* Aligning the nested list items to the left */
+}
+
+#runeword-suggestions li strong {
+    font-size: 1.2em;
+}
+
+#runeword-suggestions li em {
+    font-style: italic;
+}
+
+.rune-images img {
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+}
