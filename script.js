@@ -2075,8 +2075,56 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedRunes = Array.from(document.querySelectorAll('#rune-container input:checked')).map(input => input.value);
         runewordSuggestions.innerHTML = '';
 
+        const matchedRunewords = [];
+        const closeRunewords = [];
+
         runewords.forEach(runeword => {
-            if (runeword.runes.every(rune => selectedRunes.includes(rune))) {
+            const requiredRunes = runeword.runes;
+            const matchedRunes = requiredRunes.filter(rune => selectedRunes.includes(rune));
+            const matchPercentage = matchedRunes.length / requiredRunes.length;
+
+            if (matchPercentage === 1) {
+                matchedRunewords.push(runeword);
+            } else if (matchPercentage >= 0.5) {
+                closeRunewords.push({ runeword, missingRunes: requiredRunes.filter(rune => !selectedRunes.includes(rune)) });
+            }
+        });
+
+        if (matchedRunewords.length === 0) {
+            const message = document.createElement('li');
+            message.style.color = 'red';
+            message.innerHTML = `You cannot make any runewords with the selected runes.`;
+            runewordSuggestions.appendChild(message);
+
+            if (closeRunewords.length > 0) {
+                const closeMessage = document.createElement('li');
+                closeMessage.innerHTML = `<strong>However, you are close to making the following runewords:</strong>`;
+                runewordSuggestions.appendChild(closeMessage);
+
+                closeRunewords.forEach(({ runeword, missingRunes }) => {
+                    const closeRunewordItem = document.createElement('li');
+                    closeRunewordItem.innerHTML = `
+                        <strong>${runeword.name}<br><br></strong>Missing runes: ${missingRunes.join(', ')}<br>
+                        <div>${runeword.items.join(', ')}<br></div>
+                        <div>Req level: ${runeword.level}<br></div>
+                        <div>Ladder Only: ${runeword.ladderOnly ? 'Yes' : 'No'}<br></div>
+                        <div>Runes: ${runeword.runes.join('')}<br></div>
+                        <div class="rune-images">${runeword.runes.map(rune => {
+                            const runeImage = runes.find(r => r.name === rune).img;
+                            return `<img src="${runeImage}" alt="${rune}">`;
+                        }).join('')}<br></div>
+                        <div>
+                            <strong>Properties:</strong>
+                            <ul>
+                                ${runeword.properties.map(prop => `<li>${prop}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                    runewordSuggestions.appendChild(closeRunewordItem);
+                });
+            }
+        } else {
+            matchedRunewords.forEach(runeword => {
                 const runewordItem = document.createElement('li');
                 runewordItem.innerHTML = `
                     <strong>${runeword.name}</strong>
@@ -2096,8 +2144,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 `;
                 runewordSuggestions.appendChild(runewordItem);
-            }
-        });
-
+            });
+        }
     });
 });
