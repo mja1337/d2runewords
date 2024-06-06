@@ -48,18 +48,18 @@ button:hover {
 #runeword-suggestions {
     margin-top: 20px;
     list-style-type: none;
-    padding: 0;
+    padding: 5;
     text-align: center; /* Centering the output container */
 }
 
 #runeword-suggestions li {
     background-color: #444;
-    padding: 0px; /* Adding more padding for better spacing */
-    margin: 0px 0; /* Adding margin for better spacing */
-    border-radius: 0px;
+    padding: 15px; /* Adding more padding for better spacing */
+    margin: 10px 0; /* Adding margin for better spacing */
+    border-radius: 5px;
     text-align: center; /* Centering the individual runeword containers */
     display: inline-block; /* Centering the individual runeword containers */
-    width: 100%;
+    width: 80%;
 }
 
 #runeword-suggestions li ul {
