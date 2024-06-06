@@ -2071,6 +2071,10 @@ document.addEventListener('DOMContentLoaded', () => {
         runeContainer.appendChild(runeDiv);
     });
 
+    function highlightVariableStats(stats) {
+        return stats.replace(/(\d+-\d+)/g, '<span class="variable-stat">$1</span>');
+    }
+
     checkRunesButton.addEventListener('click', () => {
         const selectedRunes = Array.from(document.querySelectorAll('#rune-container input:checked')).map(input => input.value);
         runewordSuggestions.innerHTML = '';
@@ -2116,7 +2120,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div>
                             <strong>Properties:</strong>
                             <ul>
-                                ${runeword.properties.map(prop => `<li>${prop}</li>`).join('')}
+                                ${runeword.properties.map(prop => `<li>${highlightVariableStats(prop)}</li>`).join('')}
                             </ul>
                         </div>
                     `;
@@ -2139,8 +2143,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div>
                         <strong>Properties:</strong>
                         <ul>
-                            ${runeword.properties.map(prop => `<li>${prop}</li>`).join('')}
-                        </ul>
+                                ${runeword.properties.map(prop => `<li>${highlightVariableStats(prop)}</li>`).join('')}
+                            </ul>
                     </div>
                 `;
                 runewordSuggestions.appendChild(runewordItem);
