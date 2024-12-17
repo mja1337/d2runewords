@@ -2058,6 +2058,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const runeContainer = document.getElementById('rune-container');
     const checkRunesButton = document.getElementById('check-runes');
     const runewordSuggestions = document.getElementById('runeword-suggestions');
+    const showRunewordsButton = document.getElementById("show-runewords");
+    const showUpgradesButton = document.getElementById("show-upgrades");
+    const allRunewordsContainer = document.getElementById("all-runewords");
+    const runeUpgradesContainer = document.getElementById("rune-upgrades");
 
     runes.forEach(rune => {
         const runeDiv = document.createElement('div');
@@ -2073,6 +2077,66 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function highlightVariableStats(stats) {
         return stats.replace(/(\d+-\d+)/g, '<span class="variable-stat">$1</span>');
+    }
+
+    // Toggle for 'Show All Runewords'
+    showRunewordsButton.addEventListener("click", () => {
+        if (allRunewordsContainer.style.display === "none") {
+            allRunewordsContainer.style.display = "block";
+            showRunewordsButton.textContent = "Hide All Runewords";
+            displayAllRunewords();
+        } else {
+            allRunewordsContainer.style.display = "none";
+            showRunewordsButton.textContent = "Show All Runewords";
+        }
+    });
+
+    // Toggle for 'Show Rune Upgrade Paths'
+    showUpgradesButton.addEventListener("click", () => {
+        if (runeUpgradesContainer.style.display === "none") {
+            runeUpgradesContainer.style.display = "block";
+            showUpgradesButton.textContent = "Hide Rune Upgrade Paths";
+            displayRuneUpgradePaths();
+        } else {
+            runeUpgradesContainer.style.display = "none";
+            showUpgradesButton.textContent = "Show Rune Upgrade Paths";
+        }
+    });
+
+    // Function to display all runewords
+    function displayAllRunewords() {
+        allRunewordsContainer.innerHTML = "";
+        runewords.forEach(runeword => {
+            const runewordDiv = document.createElement("div");
+            runewordDiv.classList.add("rune-checkbox");
+            runewordDiv.innerHTML = `
+                <h3>${runeword.name}</h3>
+                <p>Runes: ${runeword.runes.join(", ")}</p>
+                <p>Items: ${runeword.items.join(", ")}</p>
+                <p>Level: ${runeword.level}</p>
+                <p>Properties:</p>
+                <ul>
+                    ${runeword.properties.map(prop => `<li>${prop}</li>`).join("")}
+                </ul>
+            `;
+            allRunewordsContainer.appendChild(runewordDiv);
+        });
+    }
+
+    // Function to display rune upgrade paths
+    function displayRuneUpgradePaths() {
+        runeUpgradesContainer.innerHTML = "";
+        runes.forEach(rune => {
+            if (rune.cubeRecipe && rune.cubeRecipe !== "-") {
+                const upgradeDiv = document.createElement("div");
+                upgradeDiv.classList.add("rune-checkbox");
+                upgradeDiv.innerHTML = `
+                    <strong>${rune.name}</strong> <br>
+                    Upgrade Recipe: ${rune.cubeRecipe}
+                `;
+                runeUpgradesContainer.appendChild(upgradeDiv);
+            }
+        });
     }
 
     checkRunesButton.addEventListener('click', () => {
